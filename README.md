@@ -1,6 +1,6 @@
 # Project: Recipe List
 
-### [Site link](https://dulcet-lamington-4ec50f.netlify.app/)
+### [Site link](https://recipe-list-test-task.netlify.app/)
 
 `package.json` contains all modules are needed<br>
 `npm i` install modules<br>
