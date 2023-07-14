@@ -19,21 +19,29 @@ const useRecipeStore = create((set) => ({
         }`
       );
       const data = await response.json();
-      set({ recipes: data, page: 1 });
+      set({ recipes: data });
     } catch (error) {
       console.error('Error fetching recipes:', error);
     }
   },
 
-  selectRecipe: (recipe) => {
+  selectRecipe: (id) => {
     set((state) => {
-      if (state.selectedRecipes.includes(recipe)) {
+      if (state.selectedRecipes.includes(id)) {
         return {
-          selectedRecipes: state.selectedRecipes.filter((r) => r !== recipe),
+          selectedRecipes: state.selectedRecipes.filter((r) => r !== id),
         };
       } else {
-        return { selectedRecipes: [...state.selectedRecipes, recipe] };
+        return { selectedRecipes: [...state.selectedRecipes, id] };
       }
+    });
+  },
+
+  selectAllRecipes: () => {
+    set((state) => {
+      return state.selectedRecipes.length !== state.recipes.length
+        ? { selectedRecipes: state.recipes.map(({ id }) => id) }
+        : { selectedRecipes: [] };
     });
   },
 
@@ -44,6 +52,10 @@ const useRecipeStore = create((set) => ({
       ),
       selectedRecipes: [],
     }));
+    if (useRecipeStore.getState().recipes.length === 0) {
+      set((state) => ({ ...state, page: state.page + 1 }));
+      useRecipeStore.getState().fetchRecipes();
+    }
   },
 }));
 

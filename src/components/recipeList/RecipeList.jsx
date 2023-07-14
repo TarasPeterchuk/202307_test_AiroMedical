@@ -15,6 +15,8 @@ const RecipeList = ({ useRecipeStore }) => {
   const selectedRecipes = useRecipeStore((state) => state.selectedRecipes);
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
   const selectRecipe = useRecipeStore((state) => state.selectRecipe);
+  const selectAllRecipes = useRecipeStore((state) => state.selectAllRecipes);
+
   const deleteSelectedRecipes = useRecipeStore(
     (state) => state.deleteSelectedRecipes
   );
@@ -28,6 +30,10 @@ const RecipeList = ({ useRecipeStore }) => {
     selectRecipe(id);
   };
 
+  const handleSelectAllClick = () => {
+    selectAllRecipes();
+  };
+
   const handleDeleteClick = () => {
     deleteSelectedRecipes();
   };
@@ -36,6 +42,7 @@ const RecipeList = ({ useRecipeStore }) => {
     <div className="recipe-list">
       <div className="recipe-list__header">
         <h2>Recipe List</h2>
+
         {selectedRecipes.length > 0 && (
           <Button
             size="medium"
@@ -46,6 +53,9 @@ const RecipeList = ({ useRecipeStore }) => {
             Delete selected
           </Button>
         )}
+        <Button size="medium" variant="outlined" onClick={handleSelectAllClick}>
+          Select all
+        </Button>
       </div>
 
       <div className="recipe-list__list">
